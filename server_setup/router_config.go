@@ -21,6 +21,7 @@ func SetupRouter(apiCfg handler.ApiConfig) *chi.Mux {
 	v1Router.Get("/healthz", handler.HandlerReadinessChecker)
 	v1Router.Get("/err", handler.HandlerErrorChecker)
 	v1Router.Post("/users", apiCfg.HandlerCreateUser)
+	v1Router.Get("/users", apiCfg.HandlerGetUserByAPIKey)
 	router.Mount("/v1", v1Router)
 
 	return router
