@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ type errResponse struct {
 	Error string `json:"error"`
 }
 
-func IsServerError(code int) bool {
+func isServerError(code int) bool {
 	return code >= 500 && code <= 599
 }
 
@@ -28,7 +28,7 @@ func respondWithJSON(responseWriter http.ResponseWriter, responseCode int, paylo
 }
 
 func respondWithError(responseWriter http.ResponseWriter, errorCode int, errorMsg string) {
-	if IsServerError(errorCode) {
+	if isServerError(errorCode) {
 		log.Println("Responding with a 5XX error: ", errorMsg)
 	}
 

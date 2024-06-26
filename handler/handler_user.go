@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"encoding/json"
@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/confusedOrca/RSS-Aggregator/internal/database"
+	"github.com/confusedOrca/RSS-Aggregator/models"
 	"github.com/google/uuid"
 )
 
@@ -14,7 +15,7 @@ type parameters struct {
 	Name string `json:"name"`
 }
 
-func (apiCfg *apiConfig) handlerCreateUser(responseWriter http.ResponseWriter, request *http.Request) {
+func (apiCfg *ApiConfig) HandlerCreateUser(responseWriter http.ResponseWriter, request *http.Request) {
 	decoder := json.NewDecoder(request.Body)
 	params := parameters{}
 
@@ -36,6 +37,6 @@ func (apiCfg *apiConfig) handlerCreateUser(responseWriter http.ResponseWriter, r
 		return
 	}
 
-	formatted_user := dbUserToUser(user)
+	formatted_user := models.DBUserToUser(user)
 	respondWithJSON(responseWriter, 200, formatted_user)
 }

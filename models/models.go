@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"time"
@@ -14,7 +14,7 @@ type User struct {
 	Name      string    `json:"name"`
 }
 
-func dbUserToUser(dbUser database.User) User {
+func DBUserToUser(dbUser database.User) User {
 	return User{
 		ID:        dbUser.ID,
 		CreatedAt: dbUser.CreatedAt,
