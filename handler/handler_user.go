@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/confusedOrca/RSS-Aggregator/internal/auth"
 	"github.com/confusedOrca/RSS-Aggregator/internal/database"
 	"github.com/confusedOrca/RSS-Aggregator/models"
 	"github.com/google/uuid"
@@ -42,19 +41,7 @@ func (apiCfg *ApiConfig) HandlerCreateUser(responseWriter http.ResponseWriter, r
 	respondWithJSON(responseWriter, 201, formatted_user)
 }
 
-func (apiCfg *ApiConfig) HandlerGetUserByAPIKey(responseWriter http.ResponseWriter, request *http.Request) {
-	apiKey, err := auth.GetAPIKey(request.Header)
-	if err != nil {
-		respondWithError(responseWriter, 403, fmt.Sprintf("Auth error: %v", err))
-		return
-	}
-
-	user, err := apiCfg.DB.GetUserByAPIKey(request.Context(), apiKey)
-	if err != nil {
-		respondWithError(responseWriter, 400, fmt.Sprintf("Could not get user: %v", err))
-		return
-	}
-
+func (apiCfg *ApiConfig) HandlerGetUser(responseWriter http.ResponseWriter, request *http.Request, user database.User) {
 	formatted_user := models.DBUserToUser(user)
 	respondWithJSON(responseWriter, 200, formatted_user)
 }
